@@ -1,0 +1,923 @@
+{
+  "infrastructure_nodes": {
+    "node_001": {
+      "node_id": "node_001",
+      "type": "ramp",
+      "name": "Science Building East Ramp",
+      "description": "Wheelchair-accessible ramp at the east entrance of the Science Building.",
+      "location": {
+        "latitude": 35.2058,
+        "longitude": -97.4457,
+        "building": "Science Building",
+        "floor": 0,
+        "campus_zone": "central"
+      },
+      "accessibility": {
+        "wheelchair_accessible": true,
+        "gradient_percent": 6.5,
+        "handrails": true,
+        "surface_type": "concrete",
+        "width_meters": 1.8
+      },
+      "connected_nodes": [
+        "node_003",
+        "node_007"
+      ],
+      "status": "active",
+      "last_verified": "2026-02-28T10:30:00Z",
+      "created_at": "2025-08-15T09:00:00Z",
+      "updated_at": "2026-02-28T10:30:00Z",
+      "image_url": "https://firebasestorage.example.com/infrastructure/node_001.jpg"
+    },
+    "node_002": {
+      "node_id": "node_002",
+      "type": "elevator",
+      "name": "Library Main Elevator",
+      "description": "Main elevator serving all 4 floors of the University Library.",
+      "location": {
+        "latitude": 35.2062,
+        "longitude": -97.4463,
+        "building": "University Library",
+        "floor": 0,
+        "campus_zone": "central"
+      },
+      "accessibility": {
+        "wheelchair_accessible": true,
+        "braille_buttons": true,
+        "audio_announcements": true,
+        "weight_capacity_kg": 1135,
+        "door_width_meters": 1.1
+      },
+      "floors_served": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "connected_nodes": [
+        "node_005",
+        "node_008"
+      ],
+      "status": "active",
+      "last_verified": "2026-03-01T14:00:00Z",
+      "created_at": "2025-08-15T09:00:00Z",
+      "updated_at": "2026-03-01T14:00:00Z",
+      "image_url": "https://firebasestorage.example.com/infrastructure/node_002.jpg"
+    },
+    "node_003": {
+      "node_id": "node_003",
+      "type": "stairs",
+      "name": "Science Building East Stairwell",
+      "description": "Interior stairwell connecting floors 1-3 at the east wing of the Science Building.",
+      "location": {
+        "latitude": 35.2059,
+        "longitude": -97.4456,
+        "building": "Science Building",
+        "floor": 1,
+        "campus_zone": "central"
+      },
+      "accessibility": {
+        "wheelchair_accessible": false,
+        "handrails": true,
+        "tactile_strips": true,
+        "step_count": 24,
+        "well_lit": true
+      },
+      "floors_served": [
+        1,
+        2,
+        3
+      ],
+      "connected_nodes": [
+        "node_001",
+        "node_004"
+      ],
+      "status": "active",
+      "last_verified": "2026-02-25T08:15:00Z",
+      "created_at": "2025-08-15T09:00:00Z",
+      "updated_at": "2026-02-25T08:15:00Z",
+      "image_url": "https://firebasestorage.example.com/infrastructure/node_003.jpg"
+    },
+    "node_004": {
+      "node_id": "node_004",
+      "type": "ramp",
+      "name": "Student Union Outdoor Ramp",
+      "description": "Outdoor ramp connecting the main campus walkway to the Student Union entrance.",
+      "location": {
+        "latitude": 35.2070,
+        "longitude": -97.4471,
+        "building": "Student Union",
+        "floor": 0,
+        "campus_zone": "north"
+      },
+      "accessibility": {
+        "wheelchair_accessible": true,
+        "gradient_percent": 5.0,
+        "handrails": true,
+        "surface_type": "textured_concrete",
+        "width_meters": 2.0
+      },
+      "connected_nodes": [
+        "node_003",
+        "node_006"
+      ],
+      "status": "active",
+      "last_verified": "2026-03-02T11:00:00Z",
+      "created_at": "2025-09-01T10:00:00Z",
+      "updated_at": "2026-03-02T11:00:00Z",
+      "image_url": "https://firebasestorage.example.com/infrastructure/node_004.jpg"
+    },
+    "node_005": {
+      "node_id": "node_005",
+      "type": "elevator",
+      "name": "Engineering Hall Service Elevator",
+      "description": "Service elevator with extra capacity, located in the west wing of Engineering Hall.",
+      "location": {
+        "latitude": 35.2050,
+        "longitude": -97.4480,
+        "building": "Engineering Hall",
+        "floor": 0,
+        "campus_zone": "west"
+      },
+      "accessibility": {
+        "wheelchair_accessible": true,
+        "braille_buttons": true,
+        "audio_announcements": false,
+        "weight_capacity_kg": 1590,
+        "door_width_meters": 1.3
+      },
+      "floors_served": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "connected_nodes": [
+        "node_002",
+        "node_009"
+      ],
+      "status": "maintenance",
+      "last_verified": "2026-02-20T16:45:00Z",
+      "created_at": "2025-08-15T09:00:00Z",
+      "updated_at": "2026-03-05T09:00:00Z",
+      "image_url": "https://firebasestorage.example.com/infrastructure/node_005.jpg"
+    },
+    "node_006": {
+      "node_id": "node_006",
+      "type": "ramp",
+      "name": "Parking Garage B Accessible Ramp",
+      "description": "Covered ramp from Parking Garage B connecting to the main pedestrian walkway.",
+      "location": {
+        "latitude": 35.2045,
+        "longitude": -97.4490,
+        "building": "Parking Garage B",
+        "floor": 0,
+        "campus_zone": "south"
+      },
+      "accessibility": {
+        "wheelchair_accessible": true,
+        "gradient_percent": 7.0,
+        "handrails": true,
+        "surface_type": "anti_slip_concrete",
+        "width_meters": 1.5
+      },
+      "connected_nodes": [
+        "node_004",
+        "node_010"
+      ],
+      "status": "active",
+      "last_verified": "2026-03-03T13:20:00Z",
+      "created_at": "2025-10-01T08:00:00Z",
+      "updated_at": "2026-03-03T13:20:00Z",
+      "image_url": "https://firebasestorage.example.com/infrastructure/node_006.jpg"
+    },
+    "node_007": {
+      "node_id": "node_007",
+      "type": "stairs",
+      "name": "Arts Center Grand Staircase",
+      "description": "Wide decorative staircase at the front entrance of the Arts Center.",
+      "location": {
+        "latitude": 35.2075,
+        "longitude": -97.4450,
+        "building": "Arts Center",
+        "floor": 0,
+        "campus_zone": "east"
+      },
+      "accessibility": {
+        "wheelchair_accessible": false,
+        "handrails": true,
+        "tactile_strips": false,
+        "step_count": 12,
+        "well_lit": true
+      },
+      "floors_served": [
+        0,
+        1
+      ],
+      "connected_nodes": [
+        "node_001",
+        "node_008"
+      ],
+      "status": "active",
+      "last_verified": "2026-02-27T09:00:00Z",
+      "created_at": "2025-08-15T09:00:00Z",
+      "updated_at": "2026-02-27T09:00:00Z",
+      "image_url": "https://firebasestorage.example.com/infrastructure/node_007.jpg"
+    },
+    "node_008": {
+      "node_id": "node_008",
+      "type": "elevator",
+      "name": "Arts Center Accessible Elevator",
+      "description": "Glass-enclosed elevator at the rear of the Arts Center, serving all floors.",
+      "location": {
+        "latitude": 35.2074,
+        "longitude": -97.4448,
+        "building": "Arts Center",
+        "floor": 0,
+        "campus_zone": "east"
+      },
+      "accessibility": {
+        "wheelchair_accessible": true,
+        "braille_buttons": true,
+        "audio_announcements": true,
+        "weight_capacity_kg": 900,
+        "door_width_meters": 1.0
+      },
+      "floors_served": [
+        0,
+        1,
+        2
+      ],
+      "connected_nodes": [
+        "node_002",
+        "node_007"
+      ],
+      "status": "active",
+      "last_verified": "2026-03-04T10:30:00Z",
+      "created_at": "2025-08-15T09:00:00Z",
+      "updated_at": "2026-03-04T10:30:00Z",
+      "image_url": "https://firebasestorage.example.com/infrastructure/node_008.jpg"
+    },
+    "node_009": {
+      "node_id": "node_009",
+      "type": "stairs",
+      "name": "Engineering Hall West Stairwell",
+      "description": "Emergency stairwell in the west wing of Engineering Hall.",
+      "location": {
+        "latitude": 35.2051,
+        "longitude": -97.4481,
+        "building": "Engineering Hall",
+        "floor": 0,
+        "campus_zone": "west"
+      },
+      "accessibility": {
+        "wheelchair_accessible": false,
+        "handrails": true,
+        "tactile_strips": true,
+        "step_count": 40,
+        "well_lit": true
+      },
+      "floors_served": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "connected_nodes": [
+        "node_005"
+      ],
+      "status": "active",
+      "last_verified": "2026-02-22T07:45:00Z",
+      "created_at": "2025-08-15T09:00:00Z",
+      "updated_at": "2026-02-22T07:45:00Z",
+      "image_url": "https://firebasestorage.example.com/infrastructure/node_009.jpg"
+    },
+    "node_010": {
+      "node_id": "node_010",
+      "type": "ramp",
+      "name": "Health Sciences Entrance Ramp",
+      "description": "ADA-compliant ramp at the main entrance of the Health Sciences building.",
+      "location": {
+        "latitude": 35.2040,
+        "longitude": -97.4495,
+        "building": "Health Sciences",
+        "floor": 0,
+        "campus_zone": "south"
+      },
+      "accessibility": {
+        "wheelchair_accessible": true,
+        "gradient_percent": 4.8,
+        "handrails": true,
+        "surface_type": "brushed_concrete",
+        "width_meters": 2.2
+      },
+      "connected_nodes": [
+        "node_006"
+      ],
+      "status": "active",
+      "last_verified": "2026-03-06T15:00:00Z",
+      "created_at": "2025-11-01T12:00:00Z",
+      "updated_at": "2026-03-06T15:00:00Z",
+      "image_url": "https://firebasestorage.example.com/infrastructure/node_010.jpg"
+    }
+  },
+  "issue_reports": {
+    "report_001": {
+      "report_id": "report_001",
+      "title": "Broken handrail on Science East Ramp",
+      "description": "The left-side handrail on the Science Building east ramp is loose and wobbling. Feels unsafe for anyone relying on it for balance.",
+      "category": "structural_damage",
+      "severity": "high",
+      "location": {
+        "latitude": 35.2058,
+        "longitude": -97.4457,
+        "building": "Science Building",
+        "floor": 0,
+        "campus_zone": "central",
+        "related_node_id": "node_001"
+      },
+      "image_url": "https://firebasestorage.example.com/reports/report_001.jpg",
+      "status": "in_progress",
+      "reported_by": "user_042",
+      "assigned_to": "maintenance_team_A",
+      "upvotes": 14,
+      "upvoted_by": [
+        "user_007",
+        "user_015",
+        "user_023",
+        "user_031"
+      ],
+      "created_at": "2026-02-28T08:45:00Z",
+      "updated_at": "2026-03-04T10:00:00Z",
+      "resolved_at": null
+    },
+    "report_002": {
+      "report_id": "report_002",
+      "title": "Elevator out of service — Library",
+      "description": "The main elevator in the University Library has been stuck on the 2nd floor since yesterday. Display shows 'OUT OF SERVICE'.",
+      "category": "equipment_malfunction",
+      "severity": "critical",
+      "location": {
+        "latitude": 35.2062,
+        "longitude": -97.4463,
+        "building": "University Library",
+        "floor": 2,
+        "campus_zone": "central",
+        "related_node_id": "node_002"
+      },
+      "image_url": "https://firebasestorage.example.com/reports/report_002.jpg",
+      "status": "open",
+      "reported_by": "user_018",
+      "assigned_to": null,
+      "upvotes": 27,
+      "upvoted_by": [
+        "user_001",
+        "user_005",
+        "user_012",
+        "user_019",
+        "user_033",
+        "user_044"
+      ],
+      "created_at": "2026-03-05T14:20:00Z",
+      "updated_at": "2026-03-05T14:20:00Z",
+      "resolved_at": null
+    },
+    "report_003": {
+      "report_id": "report_003",
+      "title": "Missing tactile strips on Arts Center stairs",
+      "description": "The front grand staircase of the Arts Center is missing tactile warning strips at the top and bottom landings. Dangerous for visually impaired users.",
+      "category": "missing_feature",
+      "severity": "high",
+      "location": {
+        "latitude": 35.2075,
+        "longitude": -97.4450,
+        "building": "Arts Center",
+        "floor": 0,
+        "campus_zone": "east",
+        "related_node_id": "node_007"
+      },
+      "image_url": "https://firebasestorage.example.com/reports/report_003.jpg",
+      "status": "open",
+      "reported_by": "user_005",
+      "assigned_to": null,
+      "upvotes": 9,
+      "upvoted_by": [
+        "user_002",
+        "user_011",
+        "user_038"
+      ],
+      "created_at": "2026-03-01T11:30:00Z",
+      "updated_at": "2026-03-01T11:30:00Z",
+      "resolved_at": null
+    },
+    "report_004": {
+      "report_id": "report_004",
+      "title": "Water pooling at Parking Garage B ramp",
+      "description": "After rain, water pools at the base of the Parking Garage B ramp creating a slippery surface. Needs better drainage or anti-slip treatment.",
+      "category": "hazard",
+      "severity": "medium",
+      "location": {
+        "latitude": 35.2045,
+        "longitude": -97.4490,
+        "building": "Parking Garage B",
+        "floor": 0,
+        "campus_zone": "south",
+        "related_node_id": "node_006"
+      },
+      "image_url": "https://firebasestorage.example.com/reports/report_004.jpg",
+      "status": "resolved",
+      "reported_by": "user_031",
+      "assigned_to": "maintenance_team_B",
+      "upvotes": 6,
+      "upvoted_by": [
+        "user_008",
+        "user_022"
+      ],
+      "created_at": "2026-02-15T16:00:00Z",
+      "updated_at": "2026-02-20T09:30:00Z",
+      "resolved_at": "2026-02-20T09:30:00Z"
+    },
+    "report_005": {
+      "report_id": "report_005",
+      "title": "Dim lighting in Engineering Hall stairwell",
+      "description": "Multiple bulbs are out on the 3rd and 4th floor landings of the west stairwell in Engineering Hall. Very difficult to see steps.",
+      "category": "lighting",
+      "severity": "medium",
+      "location": {
+        "latitude": 35.2051,
+        "longitude": -97.4481,
+        "building": "Engineering Hall",
+        "floor": 3,
+        "campus_zone": "west",
+        "related_node_id": "node_009"
+      },
+      "image_url": "https://firebasestorage.example.com/reports/report_005.jpg",
+      "status": "in_progress",
+      "reported_by": "user_012",
+      "assigned_to": "maintenance_team_A",
+      "upvotes": 11,
+      "upvoted_by": [
+        "user_003",
+        "user_017",
+        "user_029",
+        "user_041"
+      ],
+      "created_at": "2026-02-25T19:00:00Z",
+      "updated_at": "2026-03-03T08:15:00Z",
+      "resolved_at": null
+    },
+    "report_006": {
+      "report_id": "report_006",
+      "title": "Cracked concrete on Student Union ramp",
+      "description": "Large crack running across the middle of the Student Union outdoor ramp. Could catch wheelchair wheels or be a trip hazard.",
+      "category": "structural_damage",
+      "severity": "high",
+      "location": {
+        "latitude": 35.2070,
+        "longitude": -97.4471,
+        "building": "Student Union",
+        "floor": 0,
+        "campus_zone": "north",
+        "related_node_id": "node_004"
+      },
+      "image_url": "https://firebasestorage.example.com/reports/report_006.jpg",
+      "status": "open",
+      "reported_by": "user_027",
+      "assigned_to": null,
+      "upvotes": 19,
+      "upvoted_by": [
+        "user_004",
+        "user_010",
+        "user_016",
+        "user_025",
+        "user_039"
+      ],
+      "created_at": "2026-03-06T07:40:00Z",
+      "updated_at": "2026-03-06T07:40:00Z",
+      "resolved_at": null
+    },
+    "report_007": {
+      "report_id": "report_007",
+      "title": "Elevator buttons not reading in Braille — Arts Center",
+      "description": "The Braille labels on the floor buttons in the Arts Center elevator are worn smooth and no longer legible by touch.",
+      "category": "wear_and_tear",
+      "severity": "medium",
+      "location": {
+        "latitude": 35.2074,
+        "longitude": -97.4448,
+        "building": "Arts Center",
+        "floor": 0,
+        "campus_zone": "east",
+        "related_node_id": "node_008"
+      },
+      "image_url": "https://firebasestorage.example.com/reports/report_007.jpg",
+      "status": "resolved",
+      "reported_by": "user_009",
+      "assigned_to": "maintenance_team_C",
+      "upvotes": 8,
+      "upvoted_by": [
+        "user_014",
+        "user_021",
+        "user_036"
+      ],
+      "created_at": "2026-02-10T13:00:00Z",
+      "updated_at": "2026-02-18T11:45:00Z",
+      "resolved_at": "2026-02-18T11:45:00Z"
+    },
+    "report_008": {
+      "node_id": "report_008",
+      "report_id": "report_008",
+      "title": "No audio in Engineering elevator",
+      "description": "The Engineering Hall service elevator does not have audio floor announcements working. Critical for visually impaired users.",
+      "category": "equipment_malfunction",
+      "severity": "critical",
+      "location": {
+        "latitude": 35.2050,
+        "longitude": -97.4480,
+        "building": "Engineering Hall",
+        "floor": 0,
+        "campus_zone": "west",
+        "related_node_id": "node_005"
+      },
+      "image_url": "https://firebasestorage.example.com/reports/report_008.jpg",
+      "status": "in_progress",
+      "reported_by": "user_033",
+      "assigned_to": "maintenance_team_A",
+      "upvotes": 22,
+      "upvoted_by": [
+        "user_006",
+        "user_013",
+        "user_020",
+        "user_028",
+        "user_040"
+      ],
+      "created_at": "2026-03-02T09:10:00Z",
+      "updated_at": "2026-03-05T16:30:00Z",
+      "resolved_at": null
+    }
+  },
+  "gamification": {
+    "user_points": {
+      "user_001": {
+        "user_id": "user_001",
+        "display_name": "Alex Rivera",
+        "total_points": 340,
+        "level": 4,
+        "rank": "Pathfinder",
+        "badges": [
+          "first_report",
+          "ten_reports",
+          "community_hero",
+          "ramp_ranger"
+        ],
+        "points_history": [
+          {
+            "points": 10,
+            "action": "report_submitted",
+            "reference_id": "report_002",
+            "description": "Submitted a new issue report",
+            "timestamp": "2026-03-05T14:20:00Z"
+          },
+          {
+            "points": 5,
+            "action": "report_upvoted",
+            "reference_id": "report_003",
+            "description": "Upvoted a community report",
+            "timestamp": "2026-03-01T12:00:00Z"
+          },
+          {
+            "points": 25,
+            "action": "report_verified",
+            "reference_id": "report_004",
+            "description": "Report was verified and resolved by maintenance",
+            "timestamp": "2026-02-20T09:30:00Z"
+          },
+          {
+            "points": 50,
+            "action": "badge_earned",
+            "reference_id": "badge_community_hero",
+            "description": "Earned 'Community Hero' badge for 10+ verified reports",
+            "timestamp": "2026-02-18T12:00:00Z"
+          }
+        ],
+        "streak_days": 7,
+        "created_at": "2025-09-01T08:00:00Z",
+        "updated_at": "2026-03-05T14:20:00Z"
+      },
+      "user_005": {
+        "user_id": "user_005",
+        "display_name": "Jordan Patel",
+        "total_points": 520,
+        "level": 6,
+        "rank": "Trailblazer",
+        "badges": [
+          "first_report",
+          "ten_reports",
+          "community_hero",
+          "elevator_expert",
+          "night_owl",
+          "campus_cartographer"
+        ],
+        "points_history": [
+          {
+            "points": 10,
+            "action": "report_submitted",
+            "reference_id": "report_003",
+            "description": "Submitted a new issue report",
+            "timestamp": "2026-03-01T11:30:00Z"
+          },
+          {
+            "points": 15,
+            "action": "node_verified",
+            "reference_id": "node_008",
+            "description": "Verified infrastructure node accuracy",
+            "timestamp": "2026-02-27T14:00:00Z"
+          },
+          {
+            "points": 100,
+            "action": "badge_earned",
+            "reference_id": "badge_campus_cartographer",
+            "description": "Earned 'Campus Cartographer' badge for verifying 20+ nodes",
+            "timestamp": "2026-02-25T10:00:00Z"
+          }
+        ],
+        "streak_days": 14,
+        "created_at": "2025-08-20T10:00:00Z",
+        "updated_at": "2026-03-01T11:30:00Z"
+      },
+      "user_012": {
+        "user_id": "user_012",
+        "display_name": "Sam Nguyen",
+        "total_points": 185,
+        "level": 3,
+        "rank": "Scout",
+        "badges": [
+          "first_report",
+          "night_owl"
+        ],
+        "points_history": [
+          {
+            "points": 10,
+            "action": "report_submitted",
+            "reference_id": "report_005",
+            "description": "Submitted a new issue report",
+            "timestamp": "2026-02-25T19:00:00Z"
+          },
+          {
+            "points": 5,
+            "action": "report_upvoted",
+            "reference_id": "report_001",
+            "description": "Upvoted a community report",
+            "timestamp": "2026-02-28T09:00:00Z"
+          },
+          {
+            "points": 20,
+            "action": "badge_earned",
+            "reference_id": "badge_night_owl",
+            "description": "Earned 'Night Owl' badge for reporting issues after 8 PM",
+            "timestamp": "2026-02-25T19:00:00Z"
+          }
+        ],
+        "streak_days": 3,
+        "created_at": "2025-11-10T15:00:00Z",
+        "updated_at": "2026-02-28T09:00:00Z"
+      },
+      "user_027": {
+        "user_id": "user_027",
+        "display_name": "Morgan Chen",
+        "total_points": 95,
+        "level": 2,
+        "rank": "Explorer",
+        "badges": [
+          "first_report"
+        ],
+        "points_history": [
+          {
+            "points": 10,
+            "action": "report_submitted",
+            "reference_id": "report_006",
+            "description": "Submitted a new issue report",
+            "timestamp": "2026-03-06T07:40:00Z"
+          },
+          {
+            "points": 5,
+            "action": "report_upvoted",
+            "reference_id": "report_002",
+            "description": "Upvoted a community report",
+            "timestamp": "2026-03-05T15:00:00Z"
+          }
+        ],
+        "streak_days": 2,
+        "created_at": "2026-01-05T12:00:00Z",
+        "updated_at": "2026-03-06T07:40:00Z"
+      },
+      "user_042": {
+        "user_id": "user_042",
+        "display_name": "Taylor Brooks",
+        "total_points": 275,
+        "level": 4,
+        "rank": "Pathfinder",
+        "badges": [
+          "first_report",
+          "ten_reports",
+          "ramp_ranger",
+          "early_bird"
+        ],
+        "points_history": [
+          {
+            "points": 10,
+            "action": "report_submitted",
+            "reference_id": "report_001",
+            "description": "Submitted a new issue report",
+            "timestamp": "2026-02-28T08:45:00Z"
+          },
+          {
+            "points": 15,
+            "action": "node_verified",
+            "reference_id": "node_004",
+            "description": "Verified infrastructure node accuracy",
+            "timestamp": "2026-03-02T11:00:00Z"
+          },
+          {
+            "points": 50,
+            "action": "badge_earned",
+            "reference_id": "badge_ramp_ranger",
+            "description": "Earned 'Ramp Ranger' badge for verifying 5+ ramp nodes",
+            "timestamp": "2026-03-02T11:00:00Z"
+          }
+        ],
+        "streak_days": 9,
+        "created_at": "2025-10-15T07:00:00Z",
+        "updated_at": "2026-03-02T11:00:00Z"
+      }
+    },
+    "points_config": {
+      "report_submitted": 10,
+      "report_upvoted": 5,
+      "report_verified": 25,
+      "report_resolved": 50,
+      "node_verified": 15,
+      "node_added": 30,
+      "badge_earned": "varies",
+      "daily_login": 2
+    },
+    "levels": {
+      "1": {
+        "name": "Newcomer",
+        "min_points": 0,
+        "max_points": 49
+      },
+      "2": {
+        "name": "Explorer",
+        "min_points": 50,
+        "max_points": 149
+      },
+      "3": {
+        "name": "Scout",
+        "min_points": 150,
+        "max_points": 299
+      },
+      "4": {
+        "name": "Pathfinder",
+        "min_points": 300,
+        "max_points": 499
+      },
+      "5": {
+        "name": "Navigator",
+        "min_points": 500,
+        "max_points": 749
+      },
+      "6": {
+        "name": "Trailblazer",
+        "min_points": 750,
+        "max_points": 1099
+      },
+      "7": {
+        "name": "Champion",
+        "min_points": 1100,
+        "max_points": 1599
+      },
+      "8": {
+        "name": "Legend",
+        "min_points": 1600,
+        "max_points": null
+      }
+    },
+    "badges": {
+      "first_report": {
+        "badge_id": "first_report",
+        "name": "First Report",
+        "description": "Submitted your first issue report.",
+        "icon_url": "https://firebasestorage.example.com/badges/first_report.png",
+        "bonus_points": 10
+      },
+      "ten_reports": {
+        "badge_id": "ten_reports",
+        "name": "Frequent Reporter",
+        "description": "Submitted 10 or more issue reports.",
+        "icon_url": "https://firebasestorage.example.com/badges/ten_reports.png",
+        "bonus_points": 30
+      },
+      "community_hero": {
+        "badge_id": "community_hero",
+        "name": "Community Hero",
+        "description": "Had 10 or more reports verified and resolved.",
+        "icon_url": "https://firebasestorage.example.com/badges/community_hero.png",
+        "bonus_points": 50
+      },
+      "ramp_ranger": {
+        "badge_id": "ramp_ranger",
+        "name": "Ramp Ranger",
+        "description": "Verified 5 or more ramp infrastructure nodes.",
+        "icon_url": "https://firebasestorage.example.com/badges/ramp_ranger.png",
+        "bonus_points": 50
+      },
+      "elevator_expert": {
+        "badge_id": "elevator_expert",
+        "name": "Elevator Expert",
+        "description": "Verified 5 or more elevator infrastructure nodes.",
+        "icon_url": "https://firebasestorage.example.com/badges/elevator_expert.png",
+        "bonus_points": 50
+      },
+      "night_owl": {
+        "badge_id": "night_owl",
+        "name": "Night Owl",
+        "description": "Submitted an issue report after 8 PM.",
+        "icon_url": "https://firebasestorage.example.com/badges/night_owl.png",
+        "bonus_points": 20
+      },
+      "early_bird": {
+        "badge_id": "early_bird",
+        "name": "Early Bird",
+        "description": "Submitted an issue report before 8 AM.",
+        "icon_url": "https://firebasestorage.example.com/badges/early_bird.png",
+        "bonus_points": 20
+      },
+      "campus_cartographer": {
+        "badge_id": "campus_cartographer",
+        "name": "Campus Cartographer",
+        "description": "Verified 20 or more infrastructure nodes.",
+        "icon_url": "https://firebasestorage.example.com/badges/campus_cartographer.png",
+        "bonus_points": 100
+      }
+    },
+    "leaderboard": {
+      "weekly": [
+        {
+          "user_id": "user_005",
+          "display_name": "Jordan Patel",
+          "points_this_week": 125
+        },
+        {
+          "user_id": "user_042",
+          "display_name": "Taylor Brooks",
+          "points_this_week": 75
+        },
+        {
+          "user_id": "user_001",
+          "display_name": "Alex Rivera",
+          "points_this_week": 60
+        },
+        {
+          "user_id": "user_027",
+          "display_name": "Morgan Chen",
+          "points_this_week": 15
+        },
+        {
+          "user_id": "user_012",
+          "display_name": "Sam Nguyen",
+          "points_this_week": 10
+        }
+      ],
+      "all_time": [
+        {
+          "user_id": "user_005",
+          "display_name": "Jordan Patel",
+          "total_points": 520
+        },
+        {
+          "user_id": "user_001",
+          "display_name": "Alex Rivera",
+          "total_points": 340
+        },
+        {
+          "user_id": "user_042",
+          "display_name": "Taylor Brooks",
+          "total_points": 275
+        },
+        {
+          "user_id": "user_012",
+          "display_name": "Sam Nguyen",
+          "total_points": 185
+        },
+        {
+          "user_id": "user_027",
+          "display_name": "Morgan Chen",
+          "total_points": 95
+        }
+      ]
+    }
+  }
+}

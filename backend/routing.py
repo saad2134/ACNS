@@ -363,7 +363,7 @@ def _fail(message: str) -> dict:
 # ---------------------------------------------------------------------------
 # Flask API Endpoints
 # ---------------------------------------------------------------------------
-@routing_bp.route("/api/route", methods=["POST"])
+@routing_bp.route("/api/route/advanced", methods=["POST"])
 def calculate_route():
     """
     Calculate an accessible route between two coordinates.
