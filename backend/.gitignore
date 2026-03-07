@@ -1,0 +1,12 @@
+# Secrets — never commit these
+.env
+serviceAccountKey.json
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# IDE
+.vscode/
+.idea/
