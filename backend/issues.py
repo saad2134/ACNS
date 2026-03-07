@@ -40,22 +40,11 @@ logging.basicConfig(level=logging.INFO)
 # ---------------------------------------------------------------------------
 # Twilio Configuration (lazy-loaded from env vars)
 # ---------------------------------------------------------------------------
-_twilio_client: TwilioClient | None = None
+_twilio_client = None
 
-
-def _get_twilio_client() -> TwilioClient:
-    """Return a cached Twilio client, initializing on first call."""
-    global _twilio_client
-    if _twilio_client is None:
-        sid = os.environ.get("TWILIO_ACCOUNT_SID", "")
-        token = os.environ.get("TWILIO_AUTH_TOKEN", "")
-        if not sid or not token:
-            raise RuntimeError(
-                "TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN environment "
-                "variables must be set for WhatsApp notifications."
-            )
-        _twilio_client = TwilioClient(sid, token)
-    return _twilio_client
+def _get_twilio_client():
+    """Mock Twilio client for hackathon demo."""
+    return None
 
 
 # ---------------------------------------------------------------------------
@@ -237,34 +226,16 @@ def _build_whatsapp_message(issue: dict, report_id: str) -> str:
 
 def _send_whatsapp_notification(issue: dict, report_id: str) -> dict:
     """
-    Send a WhatsApp message to the supervisor via Twilio.
-
-    Returns a dict with 'success', 'message_sid' (or 'error').
+    Mock WhatsApp message for the hackathon without needing Twilio.
     """
-    from_number = os.environ.get(
-        "TWILIO_WHATSAPP_FROM", "whatsapp:+14155238886"
-    )
-    to_number = os.environ.get(
-        "SUPERVISOR_WHATSAPP_TO", "whatsapp:+919876543210"
-    )
-
     body = _build_whatsapp_message(issue, report_id)
 
-    try:
-        client = _get_twilio_client()
-        message = client.messages.create(
-            body=body,
-            from_=from_number,
-            to=to_number,
-        )
-        logger.info(
-            "WhatsApp notification sent — SID: %s", message.sid
-        )
-        return {"success": True, "message_sid": message.sid}
+    print("\n" + "="*50)
+    print("📱 [MOCK WHATSAPP NOTIFICATION]")
+    print(body)
+    print("="*50 + "\n")
 
-    except Exception as exc:
-        logger.error("WhatsApp notification failed: %s", exc)
-        return {"success": False, "error": str(exc)}
+    return {"success": True, "message_sid": "mock_sid_12345"}
 
 
 def _send_whatsapp_async(issue: dict, report_id: str) -> None:
@@ -349,22 +320,8 @@ def report_issue():
         }), 500
 
     # ---- Send WhatsApp notification (non-blocking) ----
-    whatsapp_status = "skipped"
-    twilio_configured = bool(
-        os.environ.get("TWILIO_ACCOUNT_SID")
-        and os.environ.get("TWILIO_AUTH_TOKEN")
-    )
-
-    if twilio_configured:
-        _send_whatsapp_async(data, report_id)
-        whatsapp_status = "sent"
-    else:
-        logger.warning(
-            "Twilio credentials not configured — WhatsApp notification "
-            "skipped for report %s.",
-            report_id,
-        )
-        whatsapp_status = "skipped_no_credentials"
+    _send_whatsapp_async(data, report_id)
+    whatsapp_status = "sent_mock"
 
     # ---- Award gamification points (fire & forget) ----
     _award_report_points(data.get("reported_by", "anonymous"), report_id)
@@ -372,9 +329,7 @@ def report_issue():
     return jsonify({
         "success": True,
         "report_id": report_id,
-        "message": "Issue reported successfully. Supervisor notified."
-                   if whatsapp_status == "sent"
-                   else "Issue reported successfully. WhatsApp notification skipped (Twilio not configured).",
+        "message": "Issue reported successfully. Supervisor notified via Mock WhatsApp.",
         "whatsapp_status": whatsapp_status,
     }), 201
 
@@ -509,12 +464,7 @@ def update_issue_status(report_id: str):
 
     ref.update(updates)
 
-    # Notify supervisor when status changes
-    twilio_configured = bool(
-        os.environ.get("TWILIO_ACCOUNT_SID")
-        and os.environ.get("TWILIO_AUTH_TOKEN")
-    )
-    if twilio_configured and new_status == "resolved":
+    if new_status == "resolved":
         _send_resolution_whatsapp_async(report, report_id)
 
     return jsonify({
@@ -529,14 +479,8 @@ def update_issue_status(report_id: str):
 # Resolution Notification
 # ---------------------------------------------------------------------------
 def _send_resolution_whatsapp_async(report: dict, report_id: str) -> None:
-    """Send a WhatsApp message when an issue is resolved."""
+    """Mock WhatsApp resolution message."""
     def _send():
-        from_number = os.environ.get(
-            "TWILIO_WHATSAPP_FROM", "whatsapp:+14155238886"
-        )
-        to_number = os.environ.get(
-            "SUPERVISOR_WHATSAPP_TO", "whatsapp:+919876543210"
-        )
         body = (
             f"✅ *Issue Resolved*\n\n"
             f"🆔 *Report ID:* {report_id}\n"
@@ -544,12 +488,10 @@ def _send_resolution_whatsapp_async(report: dict, report_id: str) -> None:
             f"🕐 *Resolved at:* "
             f"{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}"
         )
-        try:
-            client = _get_twilio_client()
-            client.messages.create(body=body, from_=from_number, to=to_number)
-            logger.info("Resolution WhatsApp sent for %s", report_id)
-        except Exception as exc:
-            logger.error("Resolution WhatsApp failed: %s", exc)
+        print("\n" + "="*50)
+        print("📱 [MOCK WHATSAPP NOTIFICATION - RESOLVED]")
+        print(body)
+        print("="*50 + "\n")
 
     Thread(target=_send, daemon=True).start()
 
