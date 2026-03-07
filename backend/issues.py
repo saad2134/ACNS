@@ -187,39 +187,20 @@ def _save_issue_to_firebase(issue: dict) -> str:
 # WhatsApp Notification via Twilio
 # ---------------------------------------------------------------------------
 def _build_whatsapp_message(issue: dict, report_id: str) -> str:
-    """Build a human-readable WhatsApp alert for the supervisor."""
-    severity_emoji = {
-        "low": "🟢",
-        "medium": "🟡",
-        "high": "🟠",
-        "critical": "🔴",
-    }
-    sev = issue.get("severity", "medium")
-    emoji = severity_emoji.get(sev, "⚪")
+    """Build a concise, human-readable WhatsApp alert for the supervisor."""
+    
+    # Try to grab the building name, or fallback to the exact coordinates
+    location_str = issue.get('building') or f"{issue['latitude']}, {issue['longitude']}"
+    if issue.get("floor") is not None and issue.get("building"):
+        location_str += f" (Floor: {issue['floor']})"
 
     lines = [
-        f"🚨 *New Accessibility Issue Reported*",
+        f"🚨 *Accessibility Alert*",
         f"",
-        f"{emoji} *Severity:* {sev.upper()}",
-        f"📌 *Title:* {issue['title']}",
-        f"📝 *Description:* {issue['description']}",
-        f"🏷️ *Category:* {issue['category'].replace('_', ' ').title()}",
-        f"📍 *Location:* ({issue['latitude']}, {issue['longitude']})",
+        f"⚠️ *Problem:* {issue['title']}",
+        f"📍 *Location:* {location_str}",
+        f"🗺️ *Map:* https://www.google.com/maps?q={issue['latitude']},{issue['longitude']}",
     ]
-
-    if issue.get("building"):
-        lines.append(f"🏢 *Building:* {issue['building']}")
-    if issue.get("floor") is not None:
-        lines.append(f"🔢 *Floor:* {issue['floor']}")
-    if issue.get("image_url"):
-        lines.append(f"🖼️ *Photo:* {issue['image_url']}")
-
-    lines.extend([
-        f"",
-        f"🆔 *Report ID:* {report_id}",
-        f"👤 *Reported by:* {issue.get('reported_by', 'anonymous')}",
-        f"🕐 *Time:* {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}",
-    ])
 
     return "\n".join(lines)
 
