@@ -1,213 +1,125 @@
-/**
- * components/MapView.js
- * ---------------------------------------------------------------
- * Mapbox GL JS wrapper.
- *
- * Props:
- *   route    – GeoJSON LineString (or null) to display on the map
- *   markers  – array of { lng, lat, title, type } for issue markers
- *   center   – [lng, lat]  default centre of the map
- *   zoom     – default zoom level
- *
- * The component only RENDERS – it never calculates routes or fetches
- * data on its own.
- * ---------------------------------------------------------------
- */
+import React, { useEffect, useRef } from 'react';
 
-import React, { useEffect, useRef, useState, Component } from 'react';
-
-let mapboxgl;
-const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_TOKEN || '';
-try {
-  mapboxgl = require('mapbox-gl');
-  mapboxgl.accessToken = MAPBOX_TOKEN;
-} catch (err) {
-  console.warn('mapbox-gl failed to load:', err);
-  mapboxgl = null;
-}
-
-const ISSUE_COLORS = {
-  'Broken Elevator':          '#ff5252',
-  'Blocked Ramp':             '#ffab00',
-  'Narrow Passage':           '#ff6d00',
-  'Construction Obstruction': '#e040fb',
-  'Damaged Pathway':          '#ff1744',
-  default:                    '#00d4ff',
-};
-
-/* ----------------------------------------------------------------
-   Error Boundary – prevents Mapbox crashes from blanking the page
-   ---------------------------------------------------------------- */
-class MapErrorBoundary extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { hasError: false };
-  }
-  static getDerivedStateFromError() {
-    return { hasError: true };
-  }
-  render() {
-    if (this.state.hasError) {
-      return (
-        <div className="map-container d-flex align-items-center justify-content-center"
-          style={{ background: 'var(--bg-card)', border: '1px dashed var(--accent)' }}>
-          <div className="text-center p-4">
-            <div style={{ fontSize: '2.5rem', marginBottom: 8 }}>🗺️</div>
-            <p style={{ color: 'var(--danger)', fontWeight: 600 }}>Map failed to load.</p>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '.85rem' }}>
-              Check the browser console for details.
-            </p>
-          </div>
-        </div>
-      );
-    }
-    return this.props.children;
-  }
-}
-
-/* ----------------------------------------------------------------
-   Map Component
-   ---------------------------------------------------------------- */
-const MapViewInner = ({
-  route = null,
-  markers = [],
-  center = [-97.7431, 30.2672],
-  zoom = 15,
-}) => {
-  const mapContainer = useRef(null);
+const MapView = ({ route = null, markers = [] }) => {
+  const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
-  const [mapError, setMapError] = useState(false);
+  const routeLayerRef = useRef(null);
+  const markerLayersRef = useRef([]);
 
-  /* --- Check for valid token AND that mapboxgl loaded --- */
-  const hasToken = mapboxgl && MAPBOX_TOKEN && MAPBOX_TOKEN !== 'YOUR_MAPBOX_ACCESS_TOKEN';
+  // Initialize map once Leaflet is available
+  const initMap = () => {
+    if (!mapContainerRef.current || mapRef.current) return;
+    const L = window.L;
+    if (!L) return;
 
-  /* --- Initialise map --- */
+    const map = L.map(mapContainerRef.current, {
+      center: [35.2058, -97.4457], // OU Campus
+      zoom: 15,
+    });
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors',
+      maxZoom: 19,
+    }).addTo(map);
+
+    mapRef.current = map;
+  };
+
+  // Load Leaflet CSS and JS from CDN, then init map
   useEffect(() => {
-    if (!hasToken) return;           // skip if no valid token or mapboxgl missing
-    if (mapRef.current) return;      // already initialised
-
-    try {
-      const map = new mapboxgl.Map({
-        container: mapContainer.current,
-        style: 'mapbox://styles/mapbox/dark-v11',
-        center,
-        zoom,
-      });
-
-      map.addControl(new mapboxgl.NavigationControl(), 'top-right');
-
-      map.on('error', () => setMapError(true));
-
-      map.on('load', () => {
-        // route source (empty at first)
-        map.addSource('route', {
-          type: 'geojson',
-          data: { type: 'FeatureCollection', features: [] },
-        });
-
-        map.addLayer({
-          id: 'route-line',
-          type: 'line',
-          source: 'route',
-          layout: { 'line-join': 'round', 'line-cap': 'round' },
-          paint: {
-            'line-color': '#00d4ff',
-            'line-width': 5,
-            'line-opacity': 0.85,
-          },
-        });
-      });
-
-      mapRef.current = map;
-
-      return () => map.remove();
-    } catch (err) {
-      console.error('Mapbox init error:', err);
-      setMapError(true);
+    if (window.L) {
+      initMap();
+      return;
     }
-  }, [hasToken, center, zoom]);
 
-  /* --- Update route layer when prop changes --- */
+    if (!document.getElementById('leaflet-css')) {
+      const css = document.createElement('link');
+      css.id = 'leaflet-css';
+      css.rel = 'stylesheet';
+      css.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+      document.head.appendChild(css);
+    }
+
+    if (!document.getElementById('leaflet-js')) {
+      const script = document.createElement('script');
+      script.id = 'leaflet-js';
+      script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+      script.onload = () => initMap();
+      document.body.appendChild(script);
+    } else {
+      // Script tag exists but may still be loading
+      const existingScript = document.getElementById('leaflet-js');
+      existingScript.addEventListener('load', () => initMap());
+    }
+
+    return () => {
+      if (mapRef.current) {
+        mapRef.current.remove();
+        mapRef.current = null;
+      }
+    };
+  }, []); // eslint-disable-line
+
+  // Draw route whenever it changes
   useEffect(() => {
     const map = mapRef.current;
-    if (!map || !map.isStyleLoaded()) return;
+    const L = window.L;
+    if (!map || !L) return;
 
-    const src = map.getSource('route');
-    if (!src) return;
+    // Remove old route
+    if (routeLayerRef.current) {
+      map.removeLayer(routeLayerRef.current);
+      routeLayerRef.current = null;
+    }
 
-    if (route) {
-      src.setData({
-        type: 'Feature',
-        geometry: route,
-      });
-    } else {
-      src.setData({ type: 'FeatureCollection', features: [] });
+    if (route && route.coordinates && route.coordinates.length > 1) {
+      // GeoJSON coords are [lon, lat], Leaflet wants [lat, lon]
+      const latlngs = route.coordinates.map(c => [c[1], c[0]]);
+      routeLayerRef.current = L.polyline(latlngs, {
+        color: '#00d4ff',
+        weight: 6,
+        opacity: 0.9,
+      }).addTo(map);
+      map.fitBounds(routeLayerRef.current.getBounds(), { padding: [40, 40] });
     }
   }, [route]);
 
-  /* --- Render issue markers --- */
+  // Draw markers whenever they change
   useEffect(() => {
     const map = mapRef.current;
-    if (!map) return;
+    const L = window.L;
+    if (!map || !L) return;
 
-    // Remove old markers
-    document.querySelectorAll('.acns-marker').forEach((el) => el.remove());
+    markerLayersRef.current.forEach(m => map.removeLayer(m));
+    markerLayersRef.current = [];
 
-    markers.forEach((m) => {
-      const el = document.createElement('div');
-      el.className = 'acns-marker';
-      el.style.cssText = `
-        width:16px; height:16px;
-        border-radius:50%;
-        background:${ISSUE_COLORS[m.type] || ISSUE_COLORS.default};
-        border:2px solid #fff;
-        cursor:pointer;
-        box-shadow:0 0 8px ${ISSUE_COLORS[m.type] || ISSUE_COLORS.default};
-      `;
-
-      new mapboxgl.Marker(el)
-        .setLngLat([m.lng, m.lat])
-        .setPopup(
-          new mapboxgl.Popup({ offset: 12 }).setHTML(
-            `<strong style="color:#1a1a2e">${m.title || 'Issue'}</strong>
-             <br/><span style="color:#555">${m.type || ''}</span>`
-          )
-        )
+    markers.forEach(m => {
+      const marker = L.circleMarker([m.lat, m.lng], {
+        radius: 8,
+        fillColor: '#ff5252',
+        color: '#fff',
+        weight: 2,
+        fillOpacity: 0.9,
+      })
+        .bindPopup(`<b>${m.title || 'Issue'}</b><br/>${m.type || ''}`)
         .addTo(map);
+      markerLayersRef.current.push(marker);
     });
   }, [markers]);
 
-  /* --- Fallback: no token or map error --- */
-  if (!hasToken || mapError) {
-    return (
-      <div
-        className="map-container d-flex align-items-center justify-content-center"
-        style={{ background: 'var(--bg-card)', border: '1px dashed var(--accent)' }}
-      >
-        <div className="text-center p-4">
-          <div style={{ fontSize: '2.5rem', marginBottom: 8 }}>🗺️</div>
-          <h5 style={{ color: 'var(--accent)', fontWeight: 700 }}>Campus Map</h5>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '.9rem', maxWidth: 380, margin: '0 auto' }}>
-            {!hasToken
-              ? 'Set REACT_APP_MAPBOX_TOKEN in your .env file to enable the interactive map.'
-              : 'Map encountered an error. Check the browser console.'}
-          </p>
-        </div>
-      </div>
-    );
-  }
-
-  return <div ref={mapContainer} className="map-container" />;
+  return (
+    <div
+      ref={mapContainerRef}
+      style={{
+        width: '100%',
+        height: '420px',
+        borderRadius: '12px',
+        overflow: 'hidden',
+        border: '1px solid rgba(0,212,255,0.3)',
+        background: '#1a1a2e',
+      }}
+    />
+  );
 };
 
-/* ----------------------------------------------------------------
-   Export wrapped with error boundary
-   ---------------------------------------------------------------- */
-const MapView = (props) => (
-  <MapErrorBoundary>
-    <MapViewInner {...props} />
-  </MapErrorBoundary>
-);
-
 export default MapView;
-

@@ -194,11 +194,16 @@ def create_app() -> Flask:
         Format: { leaderboard: [{ rank, username, points }, ...] }
         """
         try:
-            ref = fdb.reference("gamification/leaderboard/all_time")
-            data = ref.get() or []
+            ref = fdb.reference("gamification/user_points")
+            data = ref.get() or {}
+
+            # 'data' is a dict of { user_id: { ... } }
+            users = list(data.values())
+            # Sort by total_points descending
+            users.sort(key=lambda u: u.get("total_points", 0), reverse=True)
 
             leaderboard = []
-            for i, entry in enumerate(data):
+            for i, entry in enumerate(users):
                 leaderboard.append({
                     "rank": i + 1,
                     "username": entry.get("display_name", entry.get("user_id", "Unknown")),

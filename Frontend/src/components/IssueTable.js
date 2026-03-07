@@ -52,13 +52,17 @@ const IssueTable = ({ issues = [], loading = false }) => {
           <tbody>
             {issues.map((issue, i) => (
               <tr key={issue.id || i}>
-                <td style={{ color: 'var(--text-secondary)' }}>{issue.id ?? i + 1}</td>
-                <td style={{ fontWeight: 500 }}>{issue.location}</td>
-                <td>{issue.issueType}</td>
+                <td style={{ color: 'var(--text-secondary)' }}>{issue.report_id || issue.id || i + 1}</td>
+                <td style={{ fontWeight: 500 }}>
+                  {typeof issue.location === 'object' && issue.location !== null 
+                    ? (issue.location.building || issue.location.campus_zone || `${issue.location.latitude}, ${issue.location.longitude}`)
+                    : issue.location}
+                </td>
+                <td>{issue.category || issue.issueType}</td>
                 <td>{statusBadge(issue.status)}</td>
                 <td style={{ color: 'var(--text-secondary)', fontSize: '.85rem' }}>
-                  {issue.reportedAt
-                    ? new Date(issue.reportedAt).toLocaleDateString()
+                  {issue.created_at || issue.reportedAt
+                    ? new Date(issue.created_at || issue.reportedAt).toLocaleDateString()
                     : '—'}
                 </td>
               </tr>
