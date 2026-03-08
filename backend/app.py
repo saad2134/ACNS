@@ -72,6 +72,12 @@ def create_app() -> Flask:
     def health():
         return {"status": "ok", "service": "accessible-routing-api"}
 
+    # --- GET /api/locations ---
+    @app.route("/api/locations", methods=["GET"])
+    def get_locations():
+        """Returns the dictionary of campus buildings and their coordinates."""
+        return jsonify(CAMPUS_LOCATIONS), 200
+
     # ================================================================
     # Frontend-compatible endpoints
     # ================================================================

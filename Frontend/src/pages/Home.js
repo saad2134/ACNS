@@ -10,10 +10,10 @@
  * ---------------------------------------------------------------
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MapView from '../components/MapView';
-import { getRoute } from '../services/api';
+import { getRoute, getIssues } from '../services/api';
 
 // Sample campus locations – should match your backend's location vocabulary
 const CAMPUS_LOCATIONS = [
@@ -35,8 +35,30 @@ const Home = () => {
   const [start, setStart] = useState('');
   const [destination, setDestination] = useState('');
   const [route, setRoute] = useState(null);
+  const [markers, setMarkers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  // Fetch issues on mount for the map markers
+  useEffect(() => {
+    const fetchMarkers = async () => {
+      try {
+        const result = await getIssues();
+        const list = Array.isArray(result) ? result : result.issues || [];
+        // Map backend issues to MapView marker format { lat, lng, title, type }
+        const formattedMarkers = list.map(issue => ({
+          lat: issue.location?.latitude || issue.latitude,
+          lng: issue.location?.longitude || issue.longitude,
+          title: issue.title,
+          type: issue.category
+        }));
+        setMarkers(formattedMarkers);
+      } catch (err) {
+        console.error("Failed to load map markers:", err);
+      }
+    };
+    fetchMarkers();
+  }, []);
 
   /* --- Request accessible route from backend --- */
   const handleFindRoute = async () => {
@@ -137,7 +159,7 @@ const Home = () => {
 
       {/* Map */}
       <div className="animate-in mb-4">
-        <MapView route={route} />
+        <MapView route={route} markers={markers} />
       </div>
 
       {/* Quick-access buttons */}

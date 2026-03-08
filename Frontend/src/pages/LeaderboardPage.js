@@ -17,10 +17,13 @@ const LeaderboardPage = () => {
     const fetchData = async () => {
       try {
         const result = await getLeaderboard();
+        console.log('Leaderboard result:', result);
         // Normalise: accept both { leaderboard: [...] } and raw array
-        setData(Array.isArray(result) ? result : result.leaderboard || []);
+        const list = Array.isArray(result) ? result : (result && result.leaderboard) ? result.leaderboard : [];
+        setData(list);
       } catch (err) {
         console.error('Failed to load leaderboard:', err);
+        setData([]);
       } finally {
         setLoading(false);
       }
