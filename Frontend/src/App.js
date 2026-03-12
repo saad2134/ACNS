@@ -14,6 +14,7 @@ const ReportIssue     = React.lazy(() => import('./pages/ReportIssue'));
 const LeaderboardPage = React.lazy(() => import('./pages/LeaderboardPage'));
 const AdminDashboard  = React.lazy(() => import('./pages/AdminDashboard'));
 const Login           = React.lazy(() => import('./pages/Login'));
+const NotFound        = React.lazy(() => import('./pages/NotFound'));
 
 /* --- Top-level Error Boundary --- */
 class AppErrorBoundary extends Component {
@@ -56,6 +57,7 @@ function App() {
             <Route path="/leaderboard" element={<LeaderboardPage />} />
             <Route path="/admin"       element={<AdminDashboard />} />
             <Route path="/login"       element={<Login />} />
+            <Route path="*"          element={<NotFound />} />
           </Routes>
         </Suspense>
       </div>

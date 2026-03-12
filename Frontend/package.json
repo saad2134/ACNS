@@ -2,7 +2,6 @@
   "name": "acns-frontend",
   "version": "1.0.0",
   "private": true,
-  "homepage": "https://pranay277.github.io/OU_hackthon",
   "description": "Accessible Campus Navigation System – Frontend",
   "dependencies": {
     "axios": "^1.6.2",
